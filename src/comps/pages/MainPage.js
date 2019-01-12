@@ -22,7 +22,21 @@ class MainPage extends Component {
         })
     }
 
+    //manage book shelf updates
+    getBookUpdate = (book, shelf) => {
+        BooksAPI.update(book, shelf)
+        .then(resp => {
+            book.shelf = shelf
+            this.setState(state => ({
+                books: state.books.filter(theBook => theBook.id !== book.id).concat([book])
+            }))
+        })
+    }
+
     render() {
+        //ES6 destructuring the state
+        const { books } = this.state
+
         return (
             <div className="list-books">
                 <div className="list-books-title">
@@ -30,12 +44,30 @@ class MainPage extends Component {
                 </div>
                 <div className="list-books-content">
                     <div>
-                        will render shelfs here like this
-                        <Shelf></Shelf>
+                    <div>
+                        <Shelf
+                            getBookUpdate={this.getBookUpdate}
+                            shelfName='Currently Reading'
+                            shelfBooks={books.filter((book) => book.shelf === 'currentlyReading'
+                            ) }
+                        />
+                        <Shelf
+                            getBookUpdate={this.getBookUpdate}
+                            shelfName='Want to Read'
+                            shelfBooks={books.filter((book) => book.shelf === 'wantToRead'
+                            ) }
+                        />
+                        <Shelf
+                            getBookUpdate={this.getBookUpdate}
+                            shelfName='Read'
+                            shelfBooks={books.filter((book) => book.shelf === 'read'
+                            ) }
+                        />
+                    </div>
                     </div>
                 </div>
                 <div className="open-search">
-                    <Link to="/search">Search a Book</Link>
+                    <Link to="/search">Search for a Book</Link>
                 </div>
             </div>
             

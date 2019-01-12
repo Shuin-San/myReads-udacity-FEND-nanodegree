@@ -1,15 +1,19 @@
 import React from 'react'
 import Book from './Book'
 
-function Shelf() {
+function Shelf(props) {
+    const {shelfBooks, shelfName} = props;
     return(
         <div className="bookshelf">
-            <h2 className="bookshelf-title">The Shelf name</h2>
-            <div className="bookshelf-books">
+            <h2 className="bookshelf-title">{shelfName}</h2>
+            <div className="bookshelf-books">                    
                 <ol className="books-grid">
-                    
-                        list of books 
-                    
+                    {shelfBooks.map((book, key) =>
+                        <Book
+                            book={book}
+                            key={key}
+                            getBookUpdate={props.getBookUpdate}
+                    />)}
                 </ol>
             </div>
         </div>
