@@ -58,7 +58,7 @@ class searchPage extends Component {
     }
 
     render() {
-
+        //save the query to the state
         const { query, yourQuery } = this.state
 
         return (
